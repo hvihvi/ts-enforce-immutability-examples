@@ -27,8 +27,8 @@ const addAge = (person: Person) => {
 
 // BAD ❌
 // inner mutation with logic
-const addGender1 = (personWithoutGender: Person, married: boolean) => {
-  const person = { ...personWithoutGender }; // initialising early is a sign for future mutations
+const addCivilite1 = (personWithoutCivilite: Person, married: boolean) => {
+  const person = { ...personWithoutCivilite }; // initialising early is a sign for future mutations
   if (person.sex === Sex.M) {
     person.civilite = Civilite.MR; // "setter" intent
   }
@@ -40,15 +40,15 @@ const addGender1 = (personWithoutGender: Person, married: boolean) => {
 
 // GOOD ✅
 // no inner mutation with logic, return the value instead of mutating
-const addGender = (personWithoutGender: Person, married: boolean) => {
+const addCivilite = (person: Person, married: boolean) => {
   return {
-    ...personWithoutGender,
-    gender: mapGender(personWithoutGender, married)
+    ...person,
+    gender: mapCivilite(person, married)
   };
 };
 // GOOD ✅
 // extracted pure function, easily testable
-const mapGender = (person: Person, married: boolean) => {
+const mapCivilite = (person: Person, married: boolean) => {
   if (person.sex === Sex.M) {
     return Civilite.MR; // return the value instead of setting it
   }
@@ -56,6 +56,8 @@ const mapGender = (person: Person, married: boolean) => {
     return married ? Civilite.MME : Civilite.MLLE;
   }
 };
+
+// immutable switch usage :
 
 // BAD ❌
 // switch case with inner mutation
